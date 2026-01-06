@@ -12,6 +12,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import shopping_app.common.ApiResponse;
+import shopping_app.dto.current_user.response.CurrentUserResponse;
 import shopping_app.util.JwtUtil;
 import tools.jackson.databind.ObjectMapper;
 
@@ -51,18 +52,31 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = authHeader.substring(7);
         try {
             Claims claims = jwtUtil.validateToken(token);
+
+            Long userId = claims.get("userId", Long.class);
             String username = claims.getSubject();
+            String fullName = claims.get("fullName", String.class);
             List<String> roles = claims.get("roles", List.class);
+
+            CurrentUserResponse currentUser = new CurrentUserResponse(
+                    userId,
+                    username,
+                    fullName,
+                    roles
+            );
 
             List<SimpleGrantedAuthority> authorities = roles.stream()
                     .map(SimpleGrantedAuthority::new)
                     .toList();
 
-            UsernamePasswordAuthenticationToken authToken =
-                    new UsernamePasswordAuthenticationToken(username, null, authorities);
+            UsernamePasswordAuthenticationToken authentication =
+                    new UsernamePasswordAuthenticationToken(
+                            currentUser,
+                            null,
+                            authorities
+                    );
 
-            SecurityContextHolder.getContext().setAuthentication(authToken);
-
+            SecurityContextHolder.getContext().setAuthentication(authentication);
         } catch (Exception e) {
             writeError(response, "Token không hợp lệ");
             return;
