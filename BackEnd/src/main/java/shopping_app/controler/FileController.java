@@ -1,5 +1,6 @@
 package shopping_app.controler;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -17,6 +18,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/file")
+@Tag(name = "File") //Rename cho Swagger
 public class FileController {
 
     private final ICloudinaryService cloudinaryService;

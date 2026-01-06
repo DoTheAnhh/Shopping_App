@@ -1,5 +1,6 @@
 package shopping_app.controler;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("product")
+@Tag(name = "Product") //Rename cho Swagger
 public class ProductController {
 
     private final ProductService productService;

@@ -1,5 +1,6 @@
 package shopping_app.controler;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,6 +15,7 @@ import shopping_app.service.impl.AuthService;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auth")
+@Tag(name = "Auth") //Rename cho Swagger
 public class AuthController {
 
     private final AuthService authService;

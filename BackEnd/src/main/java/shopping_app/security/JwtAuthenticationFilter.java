@@ -11,7 +11,9 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
+import shopping_app.common.ApiResponse;
 import shopping_app.util.JwtUtil;
+import tools.jackson.databind.ObjectMapper;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,7 +30,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                                     FilterChain filterChain)
             throws ServletException, IOException {
 
-        String path = request.getRequestURI();
+        String path = request.getServletPath();
+
+        if (path.startsWith("/swagger-ui") || path.startsWith("/v3/api-docs")) {
+            filterChain.doFilter(request, response);
+            return;
+        }
+
         if (path.startsWith("/auth/")) {
             filterChain.doFilter(request, response);
             return;
@@ -64,11 +72,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void writeError(HttpServletResponse response, String message) throws IOException {
-        response.setStatus(HttpServletResponse.SC_FORBIDDEN);
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
+
+        ApiResponse<?> body = ApiResponse.error(message);
+
         response.getWriter().write(
-                "{\"status\":\"error\",\"message\":\"" + message + "\",\"data\":null,\"errors\":null}"
+                new ObjectMapper().writeValueAsString(body)
         );
     }
 }

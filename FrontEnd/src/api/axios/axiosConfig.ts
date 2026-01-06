@@ -2,7 +2,7 @@ import api from "axios";
 import { store } from "../../store/store";
 
 const apiInstance = api.create({
-  baseURL: "http://localhost:8080",
+  baseURL: "http://10.15.184.15:8080",
 });
 
 apiInstance.interceptors.request.use((config) => {
