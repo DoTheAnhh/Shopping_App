@@ -21,13 +21,11 @@ public class ProductVariantController {
     private final ProductVariantService variantService;
 
     @PostMapping("list")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ApiResponse<List<ProductVariantResponse>> getProductVariants(@RequestBody ProductVariantFilter filter) {
         return variantService.getProductVariants(filter);
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ApiResponse<ProductVariantResponse> getProductVariantById(@PathVariable("id") Long id) {
         return variantService.getProductVariantById(id);
     }

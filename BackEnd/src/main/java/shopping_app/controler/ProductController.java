@@ -21,13 +21,11 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("list")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ApiResponse<List<ProductResponse>> getProducts(@RequestBody ProductFilter filter) {
         return productService.getProducts(filter);
     }
 
     @GetMapping("{id}")
-    @PreAuthorize("hasAuthority('ADMIN') or hasAuthority('USER')")
     public ApiResponse<ProductResponse> getProductById(@PathVariable("id") Long id) {
         return productService.getProductById(id);
     }
