@@ -7,7 +7,6 @@ import shopping_app.common.ApiResponse;
 import shopping_app.dto.auth.request.LoginRequest;
 import shopping_app.dto.auth.request.RegisterRequest;
 import shopping_app.dto.auth.response.LoginResponse;
-import shopping_app.dto.role.response.RoleResponse;
 import shopping_app.entity.Role;
 import shopping_app.entity.User;
 import shopping_app.repository.RoleRepository;
@@ -38,9 +37,12 @@ public class AuthService implements IAuthService {
             return ApiResponse.error("Sai tài khoản hoặc mật khẩu");
         }
 
-        String token = jwtUtil.generateToken(user);
-        LoginResponse response = new LoginResponse(token);
-
+        String accessToken = jwtUtil.generateToken(user);
+        LoginResponse response = new LoginResponse(
+                accessToken,
+                user.getUsername(),
+                user.getFullName()
+        );
         return ApiResponse.success(response);
     }
 
