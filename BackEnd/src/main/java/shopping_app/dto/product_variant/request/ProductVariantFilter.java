@@ -29,7 +29,7 @@ public class ProductVariantFilter {
 
     private Long priceTo;
 
-    private boolean isHasStock;
+    private Boolean isHasStock;
 
     private LocalDateTime createdAtFrom;
 

@@ -31,6 +31,7 @@ public class ProductService implements IProductService {
     private final ProductRepository productRepository;
     private final BrandRepository brandRepository;
     private final GenericSpecification<Product> specification;
+    private final ProductMapper mapper;
 
     @Override
     public ApiResponse<List<ProductResponse>> getProducts(ProductFilter filter) {
@@ -39,7 +40,7 @@ public class ProductService implements IProductService {
 
         List<Product> products = productRepository.findAll(spec);
 
-        List<ProductResponse> responses = ProductMapper.toResponses(products);
+        List<ProductResponse> responses = mapper.toResponses(products);
 
         return ApiResponse.success(responses);
     }
@@ -49,7 +50,7 @@ public class ProductService implements IProductService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại với id: " + id));
 
-        ProductResponse response = ProductMapper.toResponse(product);
+        ProductResponse response = mapper.toResponse(product);
         return ApiResponse.success(response);
     }
 
