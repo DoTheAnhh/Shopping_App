@@ -5,9 +5,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 import shopping_app.common.BaseEntity;
 import shopping_app.entity.enums.ProductStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
