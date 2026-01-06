@@ -4,9 +4,6 @@ import shopping_app.common.ApiResponse;
 import shopping_app.dto.brand.request.BrandFilter;
 import shopping_app.dto.brand.request.BrandRequest;
 import shopping_app.dto.brand.response.BrandResponse;
-import shopping_app.dto.product.request.ProductFilter;
-import shopping_app.dto.product.request.ProductRequest;
-import shopping_app.dto.product.response.ProductResponse;
 
 import java.util.List;
 
