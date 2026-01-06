@@ -1,5 +1,6 @@
 package shopping_app.mapper;
 
+import org.springframework.stereotype.Component;
 import shopping_app.dto.product.response.ProductResponse;
 import shopping_app.dto.product_image.response.ProductImageResponse;
 import shopping_app.entity.Product;
@@ -7,9 +8,10 @@ import shopping_app.entity.ProductImage;
 
 import java.util.List;
 
+@Component
 public class ProductMapper {
 
-    public static ProductResponse toResponse(Product product) {
+    public ProductResponse toResponse(Product product) {
         if (product == null) return null;
 
         ProductResponse res = new ProductResponse();
@@ -19,40 +21,37 @@ public class ProductMapper {
         res.setDescription(product.getDescription());
         res.setStatus(product.getStatus().getLabel());
 
-        // brand
         res.setBrandName(
                 product.getBrand() != null
                         ? product.getBrand().getName()
                         : null
         );
 
-        // images
         res.setImages(mapImages(product.getImages()));
-
         return res;
     }
 
-    public static List<ProductResponse> toResponses(List<Product> products) {
+    public List<ProductResponse> toResponses(List<Product> products) {
         if (products == null || products.isEmpty()) {
             return List.of();
         }
 
         return products.stream()
-                .map(ProductMapper::toResponse)
+                .map(this::toResponse)
                 .toList();
     }
 
-    private static List<ProductImageResponse> mapImages(List<ProductImage> images) {
+    private List<ProductImageResponse> mapImages(List<ProductImage> images) {
         if (images == null || images.isEmpty()) {
             return List.of();
         }
 
         return images.stream()
-                .map(ProductMapper::mapImage)
+                .map(this::mapImage)
                 .toList();
     }
 
-    private static ProductImageResponse mapImage(ProductImage image) {
+    private ProductImageResponse mapImage(ProductImage image) {
         if (image == null) return null;
 
         ProductImageResponse res = new ProductImageResponse();

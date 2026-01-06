@@ -25,6 +25,7 @@ public class BrandService implements IBrandService {
 
     private final BrandRepository brandRepository;
     private final GenericSpecification<Brand> specification;
+    private final BrandMapper mapper;
 
     @Override
     public ApiResponse<List<BrandResponse>> getBrands(BrandFilter filter) {
@@ -32,7 +33,7 @@ public class BrandService implements IBrandService {
 
         List<Brand> brands = brandRepository.findAll(spec);
 
-        List<BrandResponse> responses = BrandMapper.toResponses(brands);
+        List<BrandResponse> responses = mapper.toResponses(brands);
 
         return ApiResponse.success(responses);
     }
@@ -42,7 +43,7 @@ public class BrandService implements IBrandService {
         Brand brand = brandRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Thương hiệu không tồn tại với id: " + id));
 
-        BrandResponse response = BrandMapper.toResponse(brand);
+        BrandResponse response = mapper.toResponse(brand);
         return ApiResponse.success(response);
     }
 

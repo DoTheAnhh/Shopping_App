@@ -33,15 +33,22 @@ public class JwtUtil {
     }
 
     public String generateToken(User user) {
+
         List<String> roles = user.getRoles().stream()
-                .map(Role::getName)
+                .map(Role::getName) // hoặc getCode()
                 .toList();
 
         return Jwts.builder()
                 .setSubject(user.getUsername())
+                .claim("userId", user.getId())
+                .claim("fullName", user.getFullName())
                 .claim("roles", roles)
                 .setIssuedAt(new Date())
-                .setExpiration(Date.from(Instant.now().plus(expirationDays, ChronoUnit.DAYS)))
+                .setExpiration(
+                        Date.from(
+                                Instant.now().plus(expirationDays, ChronoUnit.DAYS)
+                        )
+                )
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
     }

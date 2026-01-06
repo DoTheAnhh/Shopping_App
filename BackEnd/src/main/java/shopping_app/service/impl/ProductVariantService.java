@@ -34,19 +34,20 @@ public class ProductVariantService implements IProductVariantService {
     private final SizeRepository sizeRepository;
     private final ColorRepository colorRepository;
     private final GenericSpecification<ProductVariant> specification;
+    private final ProductVariantMapper mapper;
 
     @Override
     public ApiResponse<List<ProductVariantResponse>> getProductVariants(ProductVariantFilter filter) {
         Specification<ProductVariant> spec = specification.build(filter);
         List<ProductVariant> variants = variantRepository.findAll(spec);
-        return ApiResponse.success(ProductVariantMapper.toResponses(variants));
+        return ApiResponse.success(mapper.toResponses(variants));
     }
 
     @Override
     public ApiResponse<ProductVariantResponse> getProductVariantById(Long id) {
         ProductVariant variant = variantRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại với id: " + id));
-        return ApiResponse.success(ProductVariantMapper.toResponse(variant));
+        return ApiResponse.success(mapper.toResponse(variant));
     }
 
     @Override
