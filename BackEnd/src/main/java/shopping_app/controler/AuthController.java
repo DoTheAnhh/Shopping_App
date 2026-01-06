@@ -10,7 +10,7 @@ import shopping_app.common.ApiResponse;
 import shopping_app.dto.auth.request.LoginRequest;
 import shopping_app.dto.auth.request.RegisterRequest;
 import shopping_app.dto.auth.response.LoginResponse;
-import shopping_app.service.impl.AuthService;
+import shopping_app.service.IAuthService;
 
 @RestController
 @RequiredArgsConstructor
@@ -18,7 +18,7 @@ import shopping_app.service.impl.AuthService;
 @Tag(name = "Auth") //Rename cho Swagger
 public class AuthController {
 
-    private final AuthService authService;
+    private final IAuthService authService;
 
     @PostMapping("/login")
     public ApiResponse<LoginResponse> login(@RequestBody LoginRequest request) {

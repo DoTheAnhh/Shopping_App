@@ -51,57 +51,68 @@ public class ProductVariantService implements IProductVariantService {
 
     @Override
     public ApiResponse<String> createProductVariant(ProductVariantRequest request) {
-        validate(request);
+        try {
+            validate(request);
+            Product product = productRepository.findById(Long.parseLong(request.getProductId()))
+                    .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
+            Size size = sizeRepository.findById(Long.parseLong(request.getSizeId()))
+                    .orElseThrow(() -> new RuntimeException("Kích thước không tồn tại"));
+            Color color = colorRepository.findById(Long.parseLong(request.getColorId()))
+                    .orElseThrow(() -> new RuntimeException("Màu sắc không tồn tại"));
 
-        Product product = productRepository.findById(Long.parseLong(request.getProductId()))
-                .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
-        Size size = sizeRepository.findById(Long.parseLong(request.getSizeId()))
-                .orElseThrow(() -> new RuntimeException("Kích thước không tồn tại"));
-        Color color = colorRepository.findById(Long.parseLong(request.getColorId()))
-                .orElseThrow(() -> new RuntimeException("Màu sắc không tồn tại"));
+            ProductVariant variant = new ProductVariant();
+            variant.setProduct(product);
+            variant.setSize(size);
+            variant.setColor(color);
+            variant.setPrice(request.getPrice());
+            variant.setStock(request.getStock());
 
-        ProductVariant variant = new ProductVariant();
-        variant.setProduct(product);
-        variant.setSize(size);
-        variant.setColor(color);
-        variant.setPrice(request.getPrice());
-        variant.setStock(request.getStock());
-
-        variantRepository.save(variant);
-        return ApiResponse.success("Thành công", variant.getId().toString());
+            variantRepository.save(variant);
+            return ApiResponse.success("Thành công", variant.getId().toString());
+        } catch (Exception e) {
+            return ApiResponse.error("Lỗi: " + e.getMessage());
+        }
     }
 
     @Override
     public ApiResponse<String> updateProductVariant(ProductVariantRequest request, Long id) {
-        validate(request);
+        try {
+            validate(request);
 
-        ProductVariant variant = variantRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sản phẩm variant không tồn tại"));
+            ProductVariant variant = variantRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Sản phẩm variant không tồn tại"));
 
-        Product product = productRepository.findById(Long.parseLong(request.getProductId()))
-                .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
-        Size size = sizeRepository.findById(Long.parseLong(request.getSizeId()))
-                .orElseThrow(() -> new RuntimeException("Kích thước không tồn tại"));
-        Color color = colorRepository.findById(Long.parseLong(request.getColorId()))
-                .orElseThrow(() -> new RuntimeException("Màu sắc không tồn tại"));
+            Product product = productRepository.findById(Long.parseLong(request.getProductId()))
+                    .orElseThrow(() -> new RuntimeException("Sản phẩm không tồn tại"));
+            Size size = sizeRepository.findById(Long.parseLong(request.getSizeId()))
+                    .orElseThrow(() -> new RuntimeException("Kích thước không tồn tại"));
+            Color color = colorRepository.findById(Long.parseLong(request.getColorId()))
+                    .orElseThrow(() -> new RuntimeException("Màu sắc không tồn tại"));
 
-        variant.setProduct(product);
-        variant.setSize(size);
-        variant.setColor(color);
-        variant.setPrice(request.getPrice());
-        variant.setStock(request.getStock());
+            variant.setProduct(product);
+            variant.setSize(size);
+            variant.setColor(color);
+            variant.setPrice(request.getPrice());
+            variant.setStock(request.getStock());
 
-        variantRepository.save(variant);
-        return ApiResponse.success("Cập nhật thành công", variant.getId().toString());
+            variantRepository.save(variant);
+            return ApiResponse.success("Cập nhật thành công", variant.getId().toString());
+        } catch (Exception e) {
+            return ApiResponse.error("Lỗi: " + e.getMessage());
+        }
     }
 
     @Override
     public ApiResponse<String> deleteProductVariant(Long id) {
-        ProductVariant variant = variantRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Sản phẩm variant không tồn tại"));
-        variant.setDeletedAt(LocalDateTime.now());
-        variantRepository.save(variant);
-        return ApiResponse.success("Xóa thành công", variant.getId().toString());
+        try {
+            ProductVariant variant = variantRepository.findById(id)
+                    .orElseThrow(() -> new RuntimeException("Sản phẩm variant không tồn tại"));
+            variant.setDeletedAt(LocalDateTime.now());
+            variantRepository.save(variant);
+            return ApiResponse.success("Xóa thành công", variant.getId().toString());
+        } catch (Exception e) {
+            return ApiResponse.error("Lỗi: " + e.getMessage());
+        }
     }
 
     private void validate(ProductVariantRequest request) {

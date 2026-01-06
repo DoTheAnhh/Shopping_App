@@ -8,7 +8,7 @@ import shopping_app.common.ApiResponse;
 import shopping_app.dto.product_variant.request.ProductVariantFilter;
 import shopping_app.dto.product_variant.request.ProductVariantRequest;
 import shopping_app.dto.product_variant.response.ProductVariantResponse;
-import shopping_app.service.impl.ProductVariantService;
+import shopping_app.service.IProductVariantService;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Tag(name = "Product Variant") //Rename cho Swagger
 public class ProductVariantController {
 
-    private final ProductVariantService variantService;
+    private final IProductVariantService variantService;
 
     @PostMapping("list")
     public ApiResponse<List<ProductVariantResponse>> getProductVariants(@RequestBody ProductVariantFilter filter) {

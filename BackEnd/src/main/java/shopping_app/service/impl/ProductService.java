@@ -55,9 +55,9 @@ public class ProductService implements IProductService {
 
     @Override
     public ApiResponse<String> createProduct(ProductRequest request) {
-        validate(request);
-
         try {
+            validate(request);
+
             Brand brand = null;
             if (request.getBrandId() != null) {
                 brand = brandRepository.findById(request.getBrandId()).orElse(null);
@@ -150,7 +150,7 @@ public class ProductService implements IProductService {
         Map<String, String> errors = new HashMap<>();
 
         if (request.getCode() == null || request.getCode().isBlank()) {
-            errors.put("code", "Code không được để trống");
+            errors.put("code", "Mã không được để trống");
         }
         if (request.getName() == null || request.getName().isBlank()) {
             errors.put("name", "Tên không được để trống");

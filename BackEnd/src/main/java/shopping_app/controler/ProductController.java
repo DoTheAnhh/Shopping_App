@@ -8,7 +8,7 @@ import shopping_app.common.ApiResponse;
 import shopping_app.dto.product.request.ProductFilter;
 import shopping_app.dto.product.request.ProductRequest;
 import shopping_app.dto.product.response.ProductResponse;
-import shopping_app.service.impl.ProductService;
+import shopping_app.service.IProductService;
 
 import java.util.List;
 
@@ -18,7 +18,7 @@ import java.util.List;
 @Tag(name = "Product") //Rename cho Swagger
 public class ProductController {
 
-    private final ProductService productService;
+    private final IProductService productService;
 
     @PostMapping("list")
     public ApiResponse<List<ProductResponse>> getProducts(@RequestBody ProductFilter filter) {
