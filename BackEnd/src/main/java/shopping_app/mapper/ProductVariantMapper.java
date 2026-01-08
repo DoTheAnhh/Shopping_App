@@ -1,16 +1,20 @@
 package shopping_app.mapper;
 
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 import shopping_app.dto.product_image.response.ProductImageResponse;
 import shopping_app.dto.product_variant.response.ProductVariantResponse;
 import shopping_app.entity.ProductImage;
 import shopping_app.entity.ProductVariant;
+import shopping_app.util.MoneyUtil;
 
-import java.text.DecimalFormat;
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ProductVariantMapper {
+
+    private final MoneyUtil moneyUtil;
 
     public ProductVariantResponse toResponse(ProductVariant variant) {
         if (variant == null) return null;
@@ -20,8 +24,8 @@ public class ProductVariantMapper {
         res.setProductName(variant.getProduct() != null ? variant.getProduct().getName() : null);
         res.setSizeName(variant.getSize() != null ? variant.getSize().getName() : null);
         res.setColorName(variant.getColor() != null ? variant.getColor().getName() : null);
-        res.setPrice(String.valueOf(variant.getPrice()));
-        res.setStock(String.valueOf(variant.getStock()));
+        res.setPrice(moneyUtil.format(variant.getPrice()) != null ? moneyUtil.format(variant.getPrice()) : null);
+        res.setStock(String.valueOf(variant.getStock()) != null ? String.valueOf(variant.getStock()) : null);
         if (variant.getProduct() != null) {
             res.setProductImages(mapImages(variant.getProduct().getImages()));
         }

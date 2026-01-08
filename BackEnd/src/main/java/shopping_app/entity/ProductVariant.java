@@ -7,6 +7,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import shopping_app.common.BaseEntity;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -32,4 +34,7 @@ public class ProductVariant extends BaseEntity {
 
     //Số lượng tồn
     private Integer stock;
+
+    @OneToMany(mappedBy = "productVariant")
+    private List<InvoiceDetail> invoiceDetails;
 }
