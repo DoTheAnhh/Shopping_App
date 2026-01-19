@@ -5,6 +5,8 @@ import lombok.Getter;
 @Getter
 public enum InvoiceStatus {
 
+    CART("Giỏ hàng"),
+
     PENDING("Chờ xác nhận"),
     CONFIRMED("Đã xác nhận"),
     SHIPPED("Đang giao"),
@@ -19,9 +21,12 @@ public enum InvoiceStatus {
 
     public boolean canChangeTo(InvoiceStatus next) {
         return switch (this) {
+            case CART -> next == PENDING || next == CANCELLED;
+
             case PENDING -> next == CONFIRMED || next == CANCELLED;
             case CONFIRMED -> next == SHIPPED || next == CANCELLED;
             case SHIPPED -> next == COMPLETED;
+
             case COMPLETED, CANCELLED -> false;
         };
     }

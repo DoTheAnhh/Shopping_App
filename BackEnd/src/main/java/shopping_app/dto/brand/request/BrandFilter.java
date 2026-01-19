@@ -11,6 +11,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class BrandFilter {
 
+    private String search;
+
     private String code;
 
     private String name;

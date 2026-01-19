@@ -25,8 +25,12 @@ public class RoleDataInitializer {
                 Role user = new Role();
                 user.setName("USER");
 
+                Role shipper = new Role();
+                user.setName("SHIPPER");
+
                 roleRepository.save(admin);
                 roleRepository.save(user);
+                roleRepository.save(shipper);
             }
         };
     }

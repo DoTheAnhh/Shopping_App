@@ -1,0 +1,171 @@
+.product-list {
+  max-width: 1100px;
+  margin: auto;
+  padding: 24px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont;
+}
+
+/* HEADER */
+.product-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.product-header h1 {
+  font-size: 22px;
+  font-weight: 600;
+}
+
+/* HEADER ACTIONS */
+.header-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* SEARCH */
+.search-box {
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  background: #fff;
+}
+
+.search-box input {
+  border: none;
+  padding: 8px 12px;
+  width: 240px;
+  font-size: 14px;
+  outline: none;
+}
+
+/* CREATE */
+.btn-create {
+  padding: 8px 16px;
+  background: #2563eb;
+  color: #fff;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.btn-create:hover {
+  background: #1d4ed8;
+}
+
+/* LIST */
+.product-items {
+  list-style: none;
+  padding: 0;
+}
+
+.product-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px;
+  border: 1px solid #e5e7eb;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  background: #fff;
+}
+
+/* IMAGE */
+.product-thumb {
+  width: 72px;
+  height: 72px;
+  border-radius: 10px;
+  overflow: hidden;
+  background: #f3f4f6;
+}
+
+.product-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  font-size: 12px;
+  color: #9ca3af;
+}
+
+/* INFO */
+.product-info {
+  flex: 1;
+}
+
+.product-name {
+  font-weight: 600;
+  font-size: 16px;
+}
+
+.product-meta {
+  font-size: 13px;
+  color: #6b7280;
+  display: flex;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+/* STATUS TAG */
+.status-tag {
+  padding: 2px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 500;
+  border: 1px solid;
+}
+
+.status-tag.active {
+  color: #16a34a;
+  border-color: #16a34a;
+}
+
+.status-tag.inactive {
+  color: #dc2626;
+  border-color: #dc2626;
+}
+
+.status-tag.out_of_stock {
+  color: #d97706;
+  border-color: #d97706;
+}
+
+/* ACTIONS */
+.product-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-outline {
+  padding: 6px 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 6px;
+  background: #fff;
+  text-decoration: none;
+  font-size: 13px;
+  color: #111827;
+}
+
+.btn-danger {
+  padding: 6px 12px;
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  background: #fff;
+  color: #dc2626;
+  cursor: pointer;
+}
+
+/* STATES */
+.page-loading,
+.page-error,
+.empty-text {
+  text-align: center;
+  padding: 40px;
+}

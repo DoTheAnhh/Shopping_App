@@ -53,6 +53,26 @@ public class GenericSpecification<T> {
 
                     /* ================= RANGE FILTER ================= */
 
+                    if ("search".equals(name) && value instanceof String str && !str.isBlank()) {
+                        String keyword = "%" + str.toLowerCase() + "%";
+
+                        Predicate codeLike = cb.like(
+                                cb.lower(root.get("code")),
+                                keyword
+                        );
+
+                        Predicate nameLike = cb.like(
+                                cb.lower(root.get("name")),
+                                keyword
+                        );
+
+                        predicate = cb.and(
+                                predicate,
+                                cb.or(codeLike, nameLike)
+                        );
+                        continue;
+                    }
+
                     // check isHas + tên trường
                     if (name.startsWith("isHas") && value instanceof Boolean b) {
                         String targetField = Character.toLowerCase(name.charAt(5)) + name.substring(6); // isHasStock -> stock

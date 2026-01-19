@@ -45,9 +45,7 @@ public class JwtUtil {
                 .claim("roles", roles)
                 .setIssuedAt(new Date())
                 .setExpiration(
-                        Date.from(
-                                Instant.now().plus(expirationDays, ChronoUnit.DAYS)
-                        )
+                        Date.from(Instant.now().plus(expirationDays, ChronoUnit.DAYS))
                 )
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();

@@ -1,17 +1,19 @@
-package shopping_app.security;
+package shopping_app.util;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Component;
 import shopping_app.dto.current_user.response.CurrentUserResponse;
 
 import java.util.Collections;
 import java.util.List;
 
+@Component
 public class SecurityUtil {
 
-    private SecurityUtil() {}
+    public SecurityUtil() {}
 
-    public static CurrentUserResponse getCurrentUser() {
+    public CurrentUserResponse getCurrentUser() {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
 
@@ -28,33 +30,33 @@ public class SecurityUtil {
         return null;
     }
 
-    public static Long getUserId() {
+    public Long getUserId() {
         CurrentUserResponse user = getCurrentUser();
         return user != null ? user.getId() : null;
     }
 
-    public static String getUsername() {
+    public String getUsername() {
         CurrentUserResponse user = getCurrentUser();
         return user != null ? user.getUsername() : null;
     }
 
-    public static String getFullName() {
+    public String getFullName() {
         CurrentUserResponse user = getCurrentUser();
         return user != null ? user.getFullName() : null;
     }
 
-    public static List<String> getRoles() {
+    public List<String> getRoles() {
         CurrentUserResponse user = getCurrentUser();
         return user != null && user.getRoles() != null
                 ? user.getRoles()
                 : Collections.emptyList();
     }
 
-    public static boolean hasRole(String role) {
+    public boolean hasRole(String role) {
         return getRoles().contains(role);
     }
 
-    public static boolean isAuthenticated() {
+    public boolean isAuthenticated() {
         Authentication authentication =
                 SecurityContextHolder.getContext().getAuthentication();
         return authentication != null && authentication.isAuthenticated();

@@ -20,6 +20,7 @@ public class ProductMapper {
         res.setName(product.getName());
         res.setDescription(product.getDescription());
         res.setStatus(product.getStatus().getLabel());
+        res.setBrandId(product.getBrand().getId());
 
         res.setBrandName(
                 product.getBrand() != null

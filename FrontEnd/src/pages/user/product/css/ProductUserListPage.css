@@ -1,0 +1,149 @@
+.user-product-page {
+  background: #f6f6f6;
+  min-height: 100vh;
+  font-family: "Segoe UI", sans-serif;
+  display: flex;
+  justify-content: center;
+}
+
+.content {
+  width: 1200px;
+  padding: 25px 0 60px;
+}
+
+/* SEARCH */
+.search-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 12px 16px;
+  border-radius: 999px;
+  border: 1px solid #ddd;
+  outline: none;
+  font-size: 14px;
+  background: white;
+  margin-bottom: 25px;
+  transition: 0.2s;
+}
+
+.search-box:focus {
+  border-color: #ee4d2d;
+  box-shadow: 0 0 0 3px rgba(238, 77, 45, 0.1);
+}
+
+/* GRID */
+.user-product-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+}
+
+/* CARD */
+.user-product-card {
+  background: white;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  border: 1px solid #eee;
+  position: relative;
+}
+
+.user-product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 22px rgba(0, 0, 0, 0.08);
+}
+
+/* IMAGE */
+.thumb {
+  width: 100%;
+  height: 210px;
+  background: #fafafa;
+}
+
+.thumb img,
+.thumb video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* INFO */
+.info {
+  padding: 10px 12px 14px;
+}
+
+.name {
+  font-size: 14px;
+  height: 38px;
+  line-height: 1.35;
+  overflow: hidden;
+}
+
+.brand {
+  font-size: 12px;
+  color: #888;
+  margin-top: 3px;
+}
+
+.price {
+  margin-top: 6px;
+  font-size: 17px;
+  font-weight: 700;
+  color: #ee4d2d;
+}
+
+/* STATUS BADGE */
+.status-badge {
+  margin-top: 6px;
+  display: inline-block;
+  font-size: 11px;
+  padding: 4px 8px;
+  border-radius: 20px;
+  font-weight: 600;
+}
+
+.status-ACTIVE {
+  background: #e8f7ee;
+  color: #1a9b4c;
+}
+
+.status-INACTIVE {
+  background: #f3f3f3;
+  color: #777;
+}
+
+.status-OUT_OF_STOCK {
+  background: #fdeaea;
+  color: #d93025;
+}
+
+/* LOADING */
+.user-loading {
+  padding: 60px;
+  text-align: center;
+  font-size: 16px;
+}
+
+/* LOAD MORE PRODUCT */
+.load-more-wrapper {
+  display: flex;
+  justify-content: center;
+  margin: 30px 0 10px;
+}
+
+.load-more-wrapper button {
+  background: #111827;
+  color: white;
+  border: none;
+  padding: 10px 26px;
+  border-radius: 30px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: 0.25s;
+}
+
+.load-more-wrapper button:hover {
+  background: #1f2937;
+  transform: translateY(-1px);
+}
+

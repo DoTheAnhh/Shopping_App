@@ -1,23 +1,45 @@
-import type { PayloadAction } from "@reduxjs/toolkit";
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { ProductResponse } from "../../types/product";
 
 interface ProductState {
-  items: string[];
+  items: ProductResponse[];
+  loading: boolean;
+  error: string | null;
 }
 
 const initialState: ProductState = {
   items: [],
+  loading: false,
+  error: null,
 };
 
-export const productSlice = createSlice({
+const productSlice = createSlice({
   name: "product",
   initialState,
   reducers: {
-    setProducts: (state, action: PayloadAction<string[]>) => {
+    fetchProductsStart(state) {
+      state.loading = true;
+      state.error = null;
+    },
+    fetchProductsSuccess(state, action: PayloadAction<ProductResponse[]>) {
       state.items = action.payload;
+      state.loading = false;
+    },
+    fetchProductsError(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    removeProduct(state, action: PayloadAction<number>) {
+      state.items = state.items.filter(p => p.id !== action.payload);
     },
   },
 });
 
-export const { setProducts } = productSlice.actions;
+export const {
+  fetchProductsStart,
+  fetchProductsSuccess,
+  fetchProductsError,
+  removeProduct,
+} = productSlice.actions;
+
 export default productSlice.reducer;

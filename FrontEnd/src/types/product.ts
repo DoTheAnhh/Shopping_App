@@ -1,9 +1,12 @@
-export type ProductStatus = "ACTIVE" | "INACTIVE" | "OUT_OF_STOCK";
+export type ProductStatusRequest = "ACTIVE" | "INACTIVE" | "OUT_OF_STOCK";
+
+export type ProductStatusResponse = "Đang bán" | "Ngừng bán" | "Hết hàng";
 
 export interface ProductFilter {
+  search?: string;
   code?: string;
   name?: string;
-  statuses?: ProductStatus[];
+  statuses?: ProductStatusRequest[];
   brandIds?: number[];
   priceFrom?: number;
   priceTo?: number;
@@ -16,9 +19,9 @@ export interface ProductRequest {
   code: string;
   name: string;
   description?: string;
-  status: ProductStatus;
+  status: ProductStatusRequest;
   brandId?: number;
-  images?: ProductImageRequest[];
+  images: ProductImageRequest[];
 }
 
 export interface ProductResponse {
@@ -26,7 +29,8 @@ export interface ProductResponse {
   code: string;
   name: string;
   description: string;
-  status: ProductStatus;
+  status: ProductStatusResponse;
+  brandId: number;
   brandName: string;
   images: ProductImageResponse[];
 }

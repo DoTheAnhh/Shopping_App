@@ -1,45 +1,21 @@
 import { Route } from "react-router-dom";
-import { ProtectedRoute } from "./ProtectedRoute";
-import ProductListPage from "../pages/product/ProductListPage";
-import ProductDetailPage from "../pages/product/ProductDetailPage";
-import ProductCreatePage from "../pages/product/ProductCreatePage";
-import ProductEditPage from "../pages/product/ProductEditPage";
+import ProductFormPage from "../pages/admin/product/ProductFormPage";
+import ProductListPage from "../pages/admin/product/ProductListPage";
+import ProductUserListPage from "../pages/user/product/ProductUserListPage";
 
-export const productRoutes = [
-  <Route
-    key="product-list"
-    path="/product"
-    element={
-      <ProtectedRoute allowedRoles={["ADMIN", "USER"]}>
-        <ProductListPage />
-      </ProtectedRoute>
-    }
-  />,
-  <Route
-    key="product-detail"
-    path="/product/:id"
-    element={
-      <ProtectedRoute allowedRoles={["ADMIN", "USER"]}>
-        <ProductDetailPage />
-      </ProtectedRoute>
-    }
-  />,
-  <Route
-    key="product-create"
-    path="/product/create"
-    element={
-      <ProtectedRoute allowedRoles={["ADMIN"]}>
-        <ProductCreatePage />
-      </ProtectedRoute>
-    }
-  />,
-  <Route
-    key="product-edit"
-    path="/product/edit/:id"
-    element={
-      <ProtectedRoute allowedRoles={["ADMIN"]}>
-        <ProductEditPage />
-      </ProtectedRoute>
-    }
-  />,
-];
+
+export const adminProductRoutes = (
+  <Route path="product">
+    <Route index element={<ProductListPage />} />
+    <Route path="create" element={<ProductFormPage />} />
+    <Route path="edit/:id" element={<ProductFormPage />} />
+  </Route>
+);
+
+export const userProductRoutes = (
+  <Route path="product">
+    <Route index element={<ProductUserListPage />} />
+    {/* <Route path=":id" element={<ProductUserFormPage />} /> */}
+  </Route>
+);
+

@@ -15,9 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 public class ProductFilter {
 
-    private String code;
-
-    private String name;
+    private String search;
 
     private List<ProductStatus> statuses;
 
@@ -32,4 +30,8 @@ public class ProductFilter {
     private LocalDateTime createdAtTo;
 
     private String brandName;
+
+    private Integer page = 1;
+
+    private Integer size = 10;
 }

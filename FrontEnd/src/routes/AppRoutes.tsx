@@ -1,34 +1,64 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+
 import type { RootState } from "../store/store";
 
 import LoginPage from "../pages/auth/LoginPage";
-import DashboardPage from "../pages/dashboard/DashboardPage";
+import { roleDefaultRoute } from "../utils/roleRoute";
+import { dashboardRoutes } from "./DashboardRoutes";
+import { adminProductRoutes, userProductRoutes } from "./ProductRoutes";
+
+import AdminLayout from "../layout/admin/AdminLayout";
 import { ProtectedRoute } from "./ProtectedRoute";
-import { productRoutes } from "./ProductRoutes";
+import UserLayout from "../layout/user/UserLayout";
 
 export default function AppRoutes() {
-  const { token } = useSelector((state: RootState) => state.auth);
+  const { token, roles } = useSelector((state: RootState) => state.auth);
+
+  const defaultRoute = () => {
+    if (!token) return <Navigate to="/login" replace />;
+
+    for (const role of roles) {
+      const route = roleDefaultRoute[role];
+      if (route) return <Navigate to={route} replace />;
+    }
+
+    return <Navigate to="/login" replace />;
+  };
 
   return (
     <Routes>
+      {/* Public */}
       <Route path="/login" element={<LoginPage />} />
-      <Route path="/" element={token ? <Navigate to="/dashboard" /> : <Navigate to="/login" />} />
+      <Route path="/" element={defaultRoute()} />
+
+      {/* ADMIN */}
       <Route
-        path="/dashboard"
+        path="/admin"
         element={
           <ProtectedRoute allowedRoles={["ADMIN"]}>
-            <DashboardPage />
+            <AdminLayout />
           </ProtectedRoute>
         }
-      />
+      >
+        {dashboardRoutes}
+        {adminProductRoutes}
+      </Route>
 
-      {productRoutes}
-
+      {/* USER */}
       <Route
-        path="*"
-        element={token ? <Navigate to="/dashboard" replace /> : <Navigate to="/login" replace />}
-      />
+        path="/user"
+        element={
+          <ProtectedRoute allowedRoles={["USER"]}>
+            <UserLayout />
+          </ProtectedRoute>
+        }
+      >
+        {userProductRoutes}
+      </Route>
+
+      {/* fallback */}
+      <Route path="*" element={defaultRoute()} />
     </Routes>
   );
 }

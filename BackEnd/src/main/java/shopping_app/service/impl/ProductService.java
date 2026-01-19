@@ -161,13 +161,26 @@ public class ProductService implements IProductService {
         }
 
         if (request.getImages() == null || request.getImages().isEmpty()) {
-            errors.put("images", "Ảnh hoặc video không được để trống");
+            errors.put("images", "Ảnh không được để trống");
         } else {
+            int primaryCount = 0;
+
             for (int i = 0; i < request.getImages().size(); i++) {
                 ProductImageRequest img = request.getImages().get(i);
+
                 if (img.getUrl() == null || img.getUrl().isBlank()) {
-                    errors.put("images[" + i + "]", "Đường dẫn không được để trống");
+                    errors.put("images[" + i + "].url", "Đường dẫn không được để trống");
                 }
+
+                if (Boolean.TRUE.equals(img.getIsPrimary())) {
+                    primaryCount++;
+                }
+            }
+
+            if (primaryCount == 0) {
+                errors.put("images", "Phải có 1 ảnh chính");
+            } else if (primaryCount > 1) {
+                errors.put("images", "Chỉ được có 1 ảnh chính");
             }
         }
 

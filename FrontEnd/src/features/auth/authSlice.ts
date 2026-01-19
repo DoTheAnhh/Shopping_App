@@ -1,8 +1,9 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Role } from "../../types/role";
 
 interface AuthState {
   token: string | null;
-  roles: ("ADMIN" | "USER")[];
+  roles: Role[];
 }
 
 const tokenFromStorage = localStorage.getItem("token");
@@ -17,14 +18,17 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    setAuth: (state, action: PayloadAction<{ token: string; roles: ("ADMIN" | "USER")[] }>) => {
+    setAuth: (
+      state,
+      action: PayloadAction<{ token: string; roles: Role[] }>
+    ) => {
       state.token = action.payload.token;
       state.roles = action.payload.roles;
 
-      // Lưu vào localStorage
       localStorage.setItem("token", action.payload.token);
       localStorage.setItem("roles", JSON.stringify(action.payload.roles));
     },
+
     logout: (state) => {
       state.token = null;
       state.roles = [];

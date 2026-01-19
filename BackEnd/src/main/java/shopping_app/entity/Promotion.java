@@ -38,13 +38,13 @@ public class Promotion  extends BaseEntity {
 
     private Integer maxUsage;   // số lượt dùng tối đa
 
-    private Integer usedCount;  // số lượt đã sử dụng
+    private Integer usedCount = 0;  // số lượt đã sử dụng
 
     private LocalDateTime startAt;
 
     private LocalDateTime endAt;
 
-    private Boolean isActive;
+    private Boolean isActive = true;
 
     private String description;
 }

@@ -1,8 +1,9 @@
 import { jwtDecode } from "jwt-decode";
+import type { Role } from "../types/role";
 
-interface TokenPayload {
+export interface TokenPayload {
   sub: string;
-  roles: string[];
+  roles: Role[];
   iat: number;
   exp: number;
 }
@@ -10,8 +11,7 @@ interface TokenPayload {
 export const decodeToken = (token: string): TokenPayload | null => {
   try {
     return jwtDecode<TokenPayload>(token);
-  } catch (e) {
-    console.error("Không tìm thấy token", e);
+  } catch {
     return null;
   }
 };

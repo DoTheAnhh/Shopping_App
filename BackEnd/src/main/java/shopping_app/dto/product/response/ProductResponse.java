@@ -24,6 +24,8 @@ public class ProductResponse {
 
     private String status;
 
+    private Long brandId;
+
     private String brandName;
 
     private List<ProductImageResponse> images;

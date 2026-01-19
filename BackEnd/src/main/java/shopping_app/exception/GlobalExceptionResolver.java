@@ -34,7 +34,6 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
             Object handler,
             Exception ex) {
 
-        // ❗ Cho swagger tự xử lý
         if (isSwaggerRequest(request)) {
             return null;
         }
@@ -42,11 +41,23 @@ public class GlobalExceptionResolver implements HandlerExceptionResolver {
         ApiResponse<?> body;
         int status;
 
-        // ✅ CHỈ xử lý exception tầng controller / service
         if (ex instanceof ValidationException validationEx) {
-            body = ApiResponse.error("Dữ liệu không hợp lệ", validationEx.getErrors());
+
+            body = ApiResponse.error(
+                    "Dữ liệu không hợp lệ",
+                    validationEx.getErrors()
+            );
             status = HttpServletResponse.SC_BAD_REQUEST;
-        } else {
+
+        }
+        else if (ex instanceof BusinessException businessEx) {
+
+            body = ApiResponse.error(businessEx.getMessage());
+            status = businessEx.getStatusCode();
+
+        }
+        else {
+
             body = ApiResponse.error("Đã xảy ra lỗi, vui lòng thử lại sau");
             status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
         }
