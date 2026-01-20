@@ -20,7 +20,11 @@ public class ProductVariantResponse {
 
     private List<ProductImageResponse> productImages;
 
+    private Long sizeId;
+
     private String sizeName;
+
+    private Long colorId;
 
     private String colorName;
 

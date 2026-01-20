@@ -204,6 +204,13 @@ public class GenericSpecification<T> {
                 return root.get(parent).get("id");
             }
 
+            if (fieldName.endsWith("Id")) {
+                String parent = fieldName.substring(0, fieldName.length() - 2);
+                try {
+                    return root.get(parent).get("id");
+                } catch (Exception ignored) {}
+            }
+
             // Field trực tiếp của entity
             return root.get(fieldName);
 

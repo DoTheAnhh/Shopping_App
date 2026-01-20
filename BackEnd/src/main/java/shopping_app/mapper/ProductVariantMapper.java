@@ -22,7 +22,9 @@ public class ProductVariantMapper {
         ProductVariantResponse res = new ProductVariantResponse();
         res.setId(variant.getId());
         res.setProductName(variant.getProduct() != null ? variant.getProduct().getName() : null);
+        res.setSizeId(variant.getSize().getId() != null ? variant.getSize().getId() : null);
         res.setSizeName(variant.getSize() != null ? variant.getSize().getName() : null);
+        res.setColorId(variant.getColor().getId() != null ? variant.getColor().getId() : null);
         res.setColorName(variant.getColor() != null ? variant.getColor().getName() : null);
         res.setPrice(moneyUtil.format(variant.getPrice()) != null ? moneyUtil.format(variant.getPrice()) : null);
         res.setStock(String.valueOf(variant.getStock()) != null ? String.valueOf(variant.getStock()) : null);

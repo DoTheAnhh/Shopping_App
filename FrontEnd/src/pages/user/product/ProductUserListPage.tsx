@@ -8,9 +8,12 @@ import {
   fetchProductsStart,
   fetchProductsSuccess,
 } from "../../../features/product/productSlice";
+import { useNavigate } from "react-router-dom";
 
 export default function ProductUserListPage() {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
+
   const { items: products, loading } = useSelector(
     (state: RootState) => state.product
   );
@@ -19,15 +22,11 @@ export default function ProductUserListPage() {
   const [visibleCount, setVisibleCount] = useState(15);
 
   const getStatusClass = (status: string) =>
-  ({
-    "Đang bán": "ACTIVE",
-    "Ngừng bán": "INACTIVE",
-    "Hết hàng": "OUT_OF_STOCK",
-  }[status] || "INACTIVE");
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
+    ({
+      "Đang bán": "ACTIVE",
+      "Ngừng bán": "INACTIVE",
+      "Hết hàng": "OUT_OF_STOCK",
+    }[status] || "INACTIVE");
 
   const fetchProducts = async () => {
     dispatch(fetchProductsStart());
@@ -39,9 +38,13 @@ export default function ProductUserListPage() {
     }
   };
 
+  useEffect(() => {
+    fetchProducts();
+  }, []);
+
   const filteredProducts = useMemo(() => {
     return products.filter((p: any) =>
-      p.name.toLowerCase().includes(keyword.toLowerCase())
+      p.name?.toLowerCase().includes(keyword.toLowerCase())
     );
   }, [products, keyword]);
 
@@ -68,17 +71,26 @@ export default function ProductUserListPage() {
 
             const isVideo = primary?.url?.includes("/video/");
 
-            const minPrice = p.productVariants?.length
-              ? Math.min(...p.productVariants.map((v: any) => v.price))
-              : null;
+            const minPrice =
+              p.productVariants?.length > 0
+                ? Math.min(...p.productVariants.map((v: any) => v.price))
+                : null;
 
             return (
-              <div className="user-product-card" key={p.id}>
+              <div
+                className="user-product-card"
+                key={p.id}
+                onClick={() => navigate(`/user/product/productId/${p.id}`)}
+              >
                 <div className="thumb">
-                  {isVideo ? (
-                    <video src={primary.url} muted loop />
+                  {primary ? (
+                    isVideo ? (
+                      <video src={primary.url} muted loop />
+                    ) : (
+                      <img src={primary.url} alt={p.name} />
+                    )
                   ) : (
-                    <img src={primary?.url} alt={p.name} />
+                    <div className="no-image">No image</div>
                   )}
                 </div>
 
@@ -86,13 +98,17 @@ export default function ProductUserListPage() {
                   <div className="name">{p.name}</div>
                   <div className="brand">{p.brandName}</div>
 
-                  {minPrice && (
+                  {minPrice !== null && (
                     <div className="price">
-                      {minPrice.toLocaleString()}đ
+                      {minPrice.toLocaleString("vi-VN")}đ
                     </div>
                   )}
 
-                  <div className={`status-badge status-${getStatusClass(p.status)}`}>
+                  <div
+                    className={`status-badge status-${getStatusClass(
+                      p.status
+                    )}`}
+                  >
                     {p.status}
                   </div>
                 </div>
@@ -100,9 +116,10 @@ export default function ProductUserListPage() {
             );
           })}
         </div>
+
         {visibleCount < filteredProducts.length && (
           <div className="load-more-wrapper">
-            <button onClick={() => setVisibleCount(prev => prev + 15)}>
+            <button onClick={() => setVisibleCount((prev) => prev + 15)}>
               Xem thêm
             </button>
           </div>

@@ -13,17 +13,11 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class ProductVariantFilter {
 
-    private String productCode;
+    private Long productId;
 
-    private String productName;
+    private Long sizeId;
 
-    private String sizeCode;
-
-    private String sizeName;
-
-    private String colorCode;
-
-    private String colorName;
+    private String colorId;
 
     private Long priceFrom;
 
